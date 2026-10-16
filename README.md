@@ -2,7 +2,7 @@
 
 A tiny native macOS menu-bar app that reminds you to look away from your screen
 every 20 minutes — following the **20-20-20 rule** (every 20 minutes, look at
-something 20 feet away for 20 seconds) to reduce eye strain and dry eye from
+something 6 metres away for 20 seconds) to reduce eye strain and dry eye from
 prolonged computer use.
 
 No browser, no Electron, no dependencies. Just a ~200 KB Swift binary that lives

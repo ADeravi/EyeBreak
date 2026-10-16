@@ -168,7 +168,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCent
     private func sendNotification() {
         let content = UNMutableNotificationContent()
         content.title = "Look away 👀"
-        content.body = "20-20-20: focus on something about 20 feet away for 20 seconds."
+        content.body = "20-20-20: focus on something about 6 metres away for 20 seconds."
         content.sound = .default
         if #available(macOS 12.0, *) {
             content.interruptionLevel = .timeSensitive
@@ -202,7 +202,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCent
             title.alignment = .center
             title.translatesAutoresizingMaskIntoConstraints = false
 
-            let subtitle = NSTextField(labelWithString: "Focus on something about 20 feet away")
+            let subtitle = NSTextField(labelWithString: "Focus on something about 6 metres away")
             subtitle.font = NSFont.systemFont(ofSize: 34, weight: .medium)
             subtitle.textColor = NSColor(white: 0.88, alpha: 1)
             subtitle.alignment = .center
