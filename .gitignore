@@ -10,3 +10,6 @@ makeicon
 
 # macOS
 .DS_Store
+
+# Local screenshots (original filenames)
+Screenshot*.png

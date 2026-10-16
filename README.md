@@ -1,12 +1,24 @@
 # 👁️ Eye Break
 
-A tiny native macOS menu-bar app that reminds you to look away from your screen
-every 20 minutes — following the **20-20-20 rule** (every 20 minutes, look at
-something 6 metres away for 20 seconds) to reduce eye strain and dry eye from
-prolonged computer use.
+If you spend a long time in front of a computer and forget to rest your eyes,
+you can end up with sore, dry eyes. I had this problem, so I wrote Eye Break.
+
+It reminds me to look away for 20 seconds every 20 minutes. The reminder takes
+the whole screen, so it is hard to miss. It dims the display and counts down
+the 20 seconds while I look away.
 
 No browser, no Electron, no dependencies. Just a ~200 KB Swift binary that lives
-in your menu bar and runs in the background.
+in the menu bar and runs in the background.
+
+## Screenshots
+
+![Full-screen break reminder](screenshot-overlay.png)
+
+The full-screen break dims the display and counts down 20 seconds.
+
+![Menu-bar menu](screenshot-menu-bar.png)
+
+The menu shows the next reminder, the interval, and a "Look away now" button.
 
 ---
 
