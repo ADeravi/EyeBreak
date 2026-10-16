@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Eye Break</title>
+    <meta name="description" content="Eye Break is a macOS menu-bar app that reminds you to look away for 20 seconds every 20 minutes with a full-screen break." />
+    <meta name="theme-color" content="#242424" />
+    <link rel="canonical" href="https://aderavi.github.io/EyeBreak/" />
+    <link rel="icon" href="images/eye.svg" type="image/svg+xml" />
+    <meta property="og:title" content="Eye Break" />
+    <meta property="og:description" content="A macOS menu-bar app that reminds you to look away for 20 seconds every 20 minutes." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://aderavi.github.io/EyeBreak/" />
+    <meta property="og:image" content="https://aderavi.github.io/EyeBreak/images/overlay.png" />
+    <style>
+      :root { color-scheme: dark; --bg:#242424; --panel:#2f2f2f; --panel-strong:#383838; --text:#f5f5f5; --muted:#c7c7c7; --line:#4a4a4a; --accent:#e7e7e7; --accent-strong:#ffffff; --button-text:#202020; }
+      * { box-sizing: border-box; }
+      body { margin:0; background:var(--bg); color:var(--text); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height:1.55; }
+      main { width:min(1120px, calc(100% - 32px)); margin:0 auto; }
+      header { padding:72px 0 40px; }
+      .brand { display:flex; align-items:center; gap:14px; margin-bottom:18px; }
+      .logo-mark { display:grid; width:48px; height:48px; place-items:center; border:1px solid var(--line); border-radius:8px; background:var(--panel-strong); }
+      .logo-mark img { width:32px; height:32px; border:0; border-radius:0; }
+      .eyebrow { margin:0; color:var(--accent); font-weight:700; text-transform:uppercase; font-size:0.85rem; }
+      h1 { max-width:780px; margin:0; font-size:4.75rem; line-height:1; }
+      .lead { max-width:760px; margin:22px 0 0; color:var(--muted); font-size:1.18rem; }
+      .actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:28px; }
+      .button { display:inline-flex; min-height:44px; align-items:center; justify-content:center; border:1px solid var(--line); border-radius:6px; padding:10px 16px; color:var(--text); text-decoration:none; font-weight:700; }
+      .button.primary { border-color:var(--accent); background:var(--accent); color:var(--button-text); }
+      .button.primary:hover { background:var(--accent-strong); }
+      section { padding:34px 0; border-top:1px solid var(--line); }
+      h2 { margin:0 0 14px; font-size:1.6rem; }
+      .grid { display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:16px; }
+      .feature { border:1px solid var(--line); border-radius:8px; background:var(--panel); padding:18px; }
+      .feature h3 { margin:0 0 8px; font-size:1rem; }
+      .feature p { margin:0; color:var(--muted); }
+      .shots { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:16px; }
+      figure { margin:0; }
+      figcaption { margin-top:8px; color:var(--muted); font-size:0.9rem; }
+      img { display:block; width:100%; height:auto; border:1px solid var(--line); border-radius:8px; }
+      .terminal { overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:#171717; padding:18px; }
+      .terminal code { display:block; min-width:560px; background:transparent; padding:0; color:#f2f2f2; white-space:pre; }
+      ol, ul { padding-left:1.25rem; }
+      li + li { margin-top:6px; }
+      code { border-radius:4px; background:color-mix(in srgb, var(--line) 32%, transparent); padding:2px 5px; }
+      footer { padding:32px 0 56px; color:var(--muted); }
+      a { color:var(--accent); }
+      @media (max-width:780px) { header{padding-top:44px} h1{font-size:3rem} .grid,.shots{grid-template-columns:1fr} }
+      @media (max-width:460px) { h1{font-size:2.35rem} }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <div class="brand">
+          <span class="logo-mark" aria-hidden="true"><img src="images/eye.svg" alt="" /></span>
+          <p class="eyebrow">macOS menu-bar app</p>
+        </div>
+        <h1>Eye Break</h1>
+        <p class="lead">
+          If you spend a long time in front of a computer and forget to rest your eyes, you can end up with sore, dry
+          eyes. Eye Break reminds you to look away for 20 seconds every 20 minutes — with a full-screen reminder that's
+          hard to miss.
+        </p>
+        <div class="actions" aria-label="Primary links">
+          <a class="button primary" href="https://github.com/ADeravi/EyeBreak/releases/download/v1.1/EyeBreak-1.1.dmg">Download v1.1</a>
+          <a class="button" href="https://github.com/ADeravi/EyeBreak">Source on GitHub</a>
+          <a class="button" href="#install">Install</a>
+        </div>
+      </header>
+
+      <section aria-labelledby="what-it-does">
+        <h2 id="what-it-does">What it does</h2>
+        <div class="grid">
+          <article class="feature"><h3>Menu-bar countdown</h3><p>A live eye icon with a monospaced countdown to the next break.</p></article>
+          <article class="feature"><h3>Full-screen break</h3><p>Dims the whole screen and counts down the 20 seconds while you look away.</p></article>
+          <article class="feature"><h3>Time-sensitive notification</h3><p>A sound and time-sensitive alert that cuts through Focus and notification settings.</p></article>
+        </div>
+      </section>
+
+      <section aria-labelledby="screenshots">
+        <h2 id="screenshots">Screenshots</h2>
+        <div class="shots">
+          <figure><img src="images/overlay.png" alt="Full-screen break reminder" /><figcaption>The full-screen break dims the display and counts down 20 seconds.</figcaption></figure>
+          <figure><img src="images/menu-bar.png" alt="Menu-bar menu" /><figcaption>The menu shows the next reminder, interval, and a "Look away now" button.</figcaption></figure>
+        </div>
+      </section>
+
+      <section aria-labelledby="install">
+        <h2 id="install">How to install</h2>
+        <ol>
+          <li>Download <code>EyeBreak-1.1.dmg</code> from the <a href="https://github.com/ADeravi/EyeBreak/releases">Releases</a> page.</li>
+          <li>Double-click the DMG and drag <strong>Eye Break</strong> onto <strong>Applications</strong>.</li>
+          <li>On first launch, right-click the app &rarr; <strong>Open</strong>, then allow notifications when asked.</li>
+          <li>Alternatively, run <code>bash install.sh</code> to copy, clear quarantine, and re-sign automatically.</li>
+        </ol>
+      </section>
+
+      <section aria-labelledby="usage">
+        <h2 id="usage">Usage</h2>
+        <div class="terminal" role="img" aria-label="Demo mode command">
+          <code>./EyeBreak.app/Contents/MacOS/EyeBreak --demo</code>
+        </div>
+        <p>Click the 👁️ menu-bar item to set the interval, toggle the full-screen break, pause, or look away now.</p>
+      </section>
+
+      <footer>
+        <p>Licensed under MIT. Source available on <a href="https://github.com/ADeravi/EyeBreak">GitHub</a>.</p>
+      </footer>
+    </main>
+  </body>
+</html>
