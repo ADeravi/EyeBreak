@@ -61,6 +61,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCent
                 self?.triggerBreak()
             }
         }
+
+        // Screenshot mode: show the overlay, write it to a PNG, then quit.
+        if let idx = CommandLine.arguments.firstIndex(of: "--screenshot"),
+           idx + 1 < CommandLine.arguments.count {
+            let path = CommandLine.arguments[idx + 1]
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                self?.triggerBreak()
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak self] in
+                self?.captureOverlayScreenshot(to: path)
+                NSApp.terminate(nil)
+            }
+        }
     }
 
     // MARK: - Timer
@@ -268,6 +281,33 @@ final class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCent
     private func updateOverlayCountdown() {
         for window in overlayWindows {
             (window.contentView as? OverlayView)?.countdownLabel?.stringValue = "\(overlaySeconds)"
+        }
+    }
+
+    private func captureOverlayScreenshot(to path: String) {
+        guard let window = overlayWindows.first, let view = window.contentView else {
+            print("no overlay window to capture")
+            return
+        }
+        let scale = window.screen?.backingScaleFactor ?? 2.0
+        let bounds = view.bounds
+        let pw = Int(bounds.width * scale)
+        let ph = Int(bounds.height * scale)
+        guard let rep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: pw, pixelsHigh: ph,
+                                         bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true,
+                                         isPlanar: false, colorSpaceName: .deviceRGB,
+                                         bytesPerRow: 0, bitsPerPixel: 0) else { return }
+        rep.size = bounds.size
+        guard let ctx = NSGraphicsContext(bitmapImageRep: rep) else { return }
+        NSGraphicsContext.saveGraphicsState()
+        NSGraphicsContext.current = ctx
+        NSColor.black.setFill()
+        NSRect(origin: .zero, size: bounds.size).fill()
+        view.displayIgnoringOpacity(bounds, in: ctx)
+        NSGraphicsContext.restoreGraphicsState()
+        if let data = rep.representation(using: .png, properties: [:]) {
+            try? data.write(to: URL(fileURLWithPath: path))
+            print("saved screenshot to \(path) (\(pw)x\(ph))")
         }
     }
 
