@@ -1,0 +1,12 @@
+# Build artifacts
+EyeBreak.app/
+*.dmg
+*.zip
+
+# Generated icon artifacts
+icon_1024.png
+EyeBreak.iconset/
+makeicon
+
+# macOS
+.DS_Store
