@@ -109,6 +109,7 @@
           <li>Download <code>EyeBreak-1.2.dmg</code> from the <a href="https://github.com/ADeravi/EyeBreak/releases">Releases</a> page.</li>
           <li>Double-click the DMG and drag <strong>Eye Break</strong> onto <strong>Applications</strong>.</li>
           <li>On first launch, right-click the app &rarr; <strong>Open</strong>, then allow notifications when asked.</li>
+          <li>Tick <strong>Open at login</strong> in the menu — or enable <em>Eye Break</em> in <strong>System Settings &rarr; General &rarr; Login Items</strong> — to start it automatically.</li>
           <li>Alternatively, run <code>bash install.sh</code> to copy, clear quarantine, and re-sign automatically.</li>
         </ol>
       </section>
@@ -118,7 +119,7 @@
         <div class="terminal" role="img" aria-label="Demo mode command">
           <code>./EyeBreak.app/Contents/MacOS/EyeBreak --demo</code>
         </div>
-        <p>Click the 👁️ menu-bar item to set the interval, toggle the full-screen break, enable "Open at login", pause, or look away now.</p>
+        <p>Click the 👁️ menu-bar item to set the interval, toggle the full-screen break, enable "Open at login", pause, or look away now. The login item uses the modern macOS login-items API, so it also shows up under <strong>System Settings &rarr; General &rarr; Login Items</strong> and stays in sync with the menu checkbox.</p>
       </section>
 
       <footer>

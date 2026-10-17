@@ -57,6 +57,8 @@ The menu shows the next reminder, the interval, and a "Look away now" button.
 3. Drag **Eye Break** onto **Applications**.
 4. On first launch, right-click the app → **Open** (this is the one-time
    Gatekeeper step for ad-hoc-signed apps), then allow notifications when asked.
+5. Optionally tick **Open at login** in the menu — or enable *Eye Break* in
+   **System Settings → General → Login Items** — so it starts automatically.
 
 ### Option 2 — Terminal installer
 
@@ -97,7 +99,10 @@ Both scripts are self-contained and require only Xcode Command Line Tools
 - Click the 👁️ menu-bar item to open the menu.
 - The **interval** submenu sets how often breaks fire.
 - **Full-screen break** toggles the screen-dimming overlay.
-- **Open at login** launches the app automatically when you log in.
+- **Open at login** launches the app automatically when you log in. It uses the
+  macOS login-items API, so it also appears under
+  **System Settings → General → Login Items** and stays in sync with the
+  menu-bar checkbox.
 - **Quit** exits the app.
 
 ### Demo mode
