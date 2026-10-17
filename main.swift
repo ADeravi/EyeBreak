@@ -76,6 +76,21 @@ final class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCent
                 NSApp.terminate(nil)
             }
         }
+
+        // Login-item CLI (for testing / headless setup).
+        if CommandLine.arguments.contains("--login-item-status") {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                self?.printLoginItemStatus()
+                NSApp.terminate(nil)
+            }
+        }
+        if CommandLine.arguments.contains("--login-item") {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                self?.toggleLoginItem(nil)
+                self?.printLoginItemStatus()
+                NSApp.terminate(nil)
+            }
+        }
     }
 
     // MARK: - Timer
@@ -165,7 +180,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCent
         fullScreenItem.state = fullScreenBreak ? .on : .off
     }
 
-    @objc private func toggleLoginItem(_ sender: NSMenuItem) {
+    @objc private func toggleLoginItem(_ sender: NSMenuItem?) {
         guard #available(macOS 13.0, *) else {
             refreshLoginItemState()
             return
@@ -181,6 +196,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCent
             print("Failed to toggle login item: \(error)")
         }
         refreshLoginItemState()
+    }
+
+    private func printLoginItemStatus() {
+        guard #available(macOS 13.0, *) else {
+            print("login item: unsupported OS")
+            return
+        }
+        switch SMAppService.mainApp.status {
+        case .enabled: print("login item: enabled")
+        case .requiresApproval: print("login item: requiresApproval")
+        case .notFound: print("login item: notFound")
+        case .notRegistered: print("login item: notRegistered")
+        @unknown default: print("login item: unknown")
+        }
     }
 
     private func refreshLoginItemState() {
