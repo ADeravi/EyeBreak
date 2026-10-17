@@ -31,8 +31,10 @@ The menu shows the next reminder, the interval, and a "Look away now" button.
   level with a sound so it cuts through Focus/notification settings.
 - 🌑 **Full-screen overlay** — dims the screen and counts down the full 20-second
   break with a big "Look away 👀" prompt (toggleable).
-- ⚙️ **Adjustable interval** — choose 10 / 15 / 20 / 30 / 45 / 60 minutes from the
+- ⚙️ **Adjustable interval** — choose 15 / 20 / 25 / 30 / 45 / 60 minutes from the
   menu.
+- 🚀 **Open at login** — optionally launch automatically when you log in
+  (via the modern `SMAppService` API, reflected as a menu-bar checkbox).
 - 🎬 **Demo mode** — trigger an immediate break with `--demo` (great for showing
   what the break experience looks like).
 
@@ -49,7 +51,7 @@ The menu shows the next reminder, the interval, and a "Look away now" button.
 
 ### Option 1 — DMG (easiest)
 
-1. Download `EyeBreak-1.1.dmg` from the
+1. Download `EyeBreak-1.2.dmg` from the
    [Releases](https://github.com/ADeravi/EyeBreak/releases) page.
 2. Double-click to mount it.
 3. Drag **Eye Break** onto **Applications**.
@@ -84,8 +86,8 @@ Both scripts are self-contained and require only Xcode Command Line Tools
 | Artifact | Description |
 |---|---|
 | `EyeBreak.app` | Universal app bundle (arm64 + x86_64) |
-| `EyeBreak-1.1.dmg` | Drag-to-Applications disk image |
-| `EyeBreak-1.1.zip` | Plain zip |
+| `EyeBreak-1.2.dmg` | Drag-to-Applications disk image |
+| `EyeBreak-1.2.zip` | Plain zip |
 | `install.sh` | One-line installer (clears quarantine) |
 
 ---
@@ -95,6 +97,7 @@ Both scripts are self-contained and require only Xcode Command Line Tools
 - Click the 👁️ menu-bar item to open the menu.
 - The **interval** submenu sets how often breaks fire.
 - **Full-screen break** toggles the screen-dimming overlay.
+- **Open at login** launches the app automatically when you log in.
 - **Quit** exits the app.
 
 ### Demo mode
@@ -118,6 +121,8 @@ without waiting 20 minutes.
 - The overlay is a borderless `NSWindow` at the `.screenSaver` window level,
   shown on every connected display (`canJoinAllSpaces` +
   `fullScreenAuxiliary`).
+- "Open at login" uses `SMAppService.mainApp` (macOS 13+), the modern login-item
+  API — no LaunchAgents or `LSSharedFileList` hacks.
 
 ---
 

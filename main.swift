@@ -1,4 +1,5 @@
 import Cocoa
+import ServiceManagement
 import UserNotifications
 
 private let breakSeconds = 20
@@ -19,13 +20,14 @@ final class OverlayView: NSView {
     override func cancelOperation(_ sender: Any?) { onDismiss?() }
 }
 
-final class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDelegate {
+final class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDelegate, NSMenuDelegate {
     private var statusItem: NSStatusItem!
     private var menu: NSMenu!
     private var timer: Timer?
     private var titleItem: NSMenuItem!
     private var pauseItem: NSMenuItem!
     private var fullScreenItem: NSMenuItem!
+    private var loginItem: NSMenuItem!
 
     private var remaining: TimeInterval = 20 * 60
     private var paused = false
@@ -111,6 +113,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCent
 
     private func buildMenu() {
         menu = NSMenu()
+        menu.delegate = self
 
         titleItem = NSMenuItem(title: "", action: nil, keyEquivalent: "")
         menu.addItem(titleItem)
@@ -141,6 +144,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCent
         nowItem.target = self
         menu.addItem(nowItem)
 
+        loginItem = NSMenuItem(title: "Open at login", action: #selector(toggleLoginItem(_:)), keyEquivalent: "")
+        loginItem.target = self
+        menu.addItem(loginItem)
+
         menu.addItem(NSMenuItem.separator())
 
         let quitItem = NSMenuItem(title: "Quit Eye Break", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
@@ -156,6 +163,48 @@ final class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCent
     @objc private func toggleFullScreen(_ sender: NSMenuItem) {
         fullScreenBreak.toggle()
         fullScreenItem.state = fullScreenBreak ? .on : .off
+    }
+
+    @objc private func toggleLoginItem(_ sender: NSMenuItem) {
+        guard #available(macOS 13.0, *) else {
+            refreshLoginItemState()
+            return
+        }
+        do {
+            if SMAppService.mainApp.status == .enabled {
+                try SMAppService.mainApp.unregister()
+            } else {
+                try SMAppService.mainApp.register()
+            }
+        } catch {
+            NSSound.beep()
+            print("Failed to toggle login item: \(error)")
+        }
+        refreshLoginItemState()
+    }
+
+    private func refreshLoginItemState() {
+        guard let loginItem else { return }
+        guard #available(macOS 13.0, *) else {
+            loginItem.state = .off
+            loginItem.title = "Open at login (unsupported)"
+            return
+        }
+        switch SMAppService.mainApp.status {
+        case .enabled:
+            loginItem.state = .on
+            loginItem.title = "Open at login"
+        case .requiresApproval:
+            loginItem.state = .off
+            loginItem.title = "Open at login (approve in System Settings)"
+        default:
+            loginItem.state = .off
+            loginItem.title = "Open at login"
+        }
+    }
+
+    func menuWillOpen(_ menu: NSMenu) {
+        refreshLoginItemState()
     }
 
     @objc private func changeInterval(_ sender: NSMenuItem) {

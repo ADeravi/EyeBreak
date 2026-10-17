@@ -4,15 +4,15 @@ cd "$(dirname "$0")"
 
 BUNDLE="EyeBreak.app"
 BIN="EyeBreak"
-VER="1.1"
+VER="1.2"
 MIN_OS="13.0"
 
 rm -rf "$BUNDLE" stage
 mkdir -p "$BUNDLE/Contents/MacOS" "$BUNDLE/Contents/Resources"
 
 # --- Universal binary (Apple Silicon + Intel) ---
-swiftc -O -target arm64-apple-macosx$MIN_OS -framework Cocoa -framework UserNotifications -o /tmp/eb_arm64 main.swift
-swiftc -O -target x86_64-apple-macosx$MIN_OS -framework Cocoa -framework UserNotifications -o /tmp/eb_x86_64 main.swift
+swiftc -O -target arm64-apple-macosx$MIN_OS -framework Cocoa -framework ServiceManagement -framework UserNotifications -o /tmp/eb_arm64 main.swift
+swiftc -O -target x86_64-apple-macosx$MIN_OS -framework Cocoa -framework ServiceManagement -framework UserNotifications -o /tmp/eb_x86_64 main.swift
 lipo -create /tmp/eb_arm64 /tmp/eb_x86_64 -output "$BUNDLE/Contents/MacOS/$BIN"
 rm -f /tmp/eb_arm64 /tmp/eb_x86_64
 
@@ -44,8 +44,8 @@ cat > "$BUNDLE/Contents/Info.plist" <<'PLIST'
   <key>CFBundleIdentifier</key><string>com.ad.eyebreak</string>
   <key>CFBundleExecutable</key><string>EyeBreak</string>
   <key>CFBundleIconFile</key><string>AppIcon</string>
-  <key>CFBundleVersion</key><string>1.1</string>
-  <key>CFBundleShortVersionString</key><string>1.1</string>
+  <key>CFBundleVersion</key><string>1.2</string>
+  <key>CFBundleShortVersionString</key><string>1.2</string>
   <key>CFBundlePackageType</key><string>APPL</string>
   <key>LSMinimumSystemVersion</key><string>13.0</string>
   <key>LSUIElement</key><true/>
